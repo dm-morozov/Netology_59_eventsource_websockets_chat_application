@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+echo "Running pre-commit hook"
+echo "Current directory: $(pwd)"
+
+# Проверка кода линтером
+yarn lint
+
+# Unit-тесты
+# yarn test
+
+# E2E-тесты
+# yarn test:e2e:headless

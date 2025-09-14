@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // Версия JavaScript, в которую компилируется код.
+    "module": "ESNext", // Формат модулей (ESNext для Webpack).
+    "moduleResolution": "node",
+    // "allowImportingTsExtensions": true,
+    "strict": true, // Включает строгие проверки типов.
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+
+    // Папки для скомпилированного кода и исходников.
+    "outDir": "./dist",
+    "rootDir": "./src",
+
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "lib": ["ES2020", "DOM"]
+  },
+  
+  // Какие файлы обрабатывать.
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
