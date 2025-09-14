@@ -10,7 +10,7 @@
 [**Ссылка на проект на GitHub Pages**](https://dm-morozov.github.io/Netology_59_eventsource_websockets_chat_application/)
 
 ---
-
+Проверим работу GitPages
 -----
 
 ## 📧 Контакты
