@@ -1,6 +1,5 @@
 // src/ts/types.ts
 
-
 // Описание структуры пользователя
 export interface User {
   id: string;

@@ -13,20 +13,29 @@ export default class ChatUI {
   private chatInput: HTMLInputElement | null;
 
   constructor() {
-    this.modal = document.querySelector('#modal') as HTMLDivElement;
-    this.nicknameInput = document.querySelector('#nickname') as HTMLInputElement;
-    this.modalLoginBtn = document.querySelector('#modal-login-btn') as HTMLButtonElement;
-    this.errorText = document.querySelector('#modal-error') as HTMLParagraphElement;
+    this.modal = document.querySelector("#modal") as HTMLDivElement;
+    this.nicknameInput = document.querySelector(
+      "#nickname",
+    ) as HTMLInputElement;
+    this.modalLoginBtn = document.querySelector(
+      "#modal-login-btn",
+    ) as HTMLButtonElement;
+    this.errorText = document.querySelector(
+      "#modal-error",
+    ) as HTMLParagraphElement;
 
-    this.chatContainer = document.querySelector('#chat-container') as HTMLDivElement;
-    this.usersList = document.querySelector('#users-list') as HTMLUListElement;
-    this.messagesBox = document.querySelector('#messages-box') as HTMLDivElement;
-    this.chatForm = document.querySelector('#chat-form') as HTMLFormElement;
-    this.chatInput = document.querySelector('#chat-input') as HTMLInputElement;
+    this.chatContainer = document.querySelector(
+      "#chat-container",
+    ) as HTMLDivElement;
+    this.usersList = document.querySelector("#users-list") as HTMLUListElement;
+    this.messagesBox = document.querySelector(
+      "#messages-box",
+    ) as HTMLDivElement;
+    this.chatForm = document.querySelector("#chat-form") as HTMLFormElement;
+    this.chatInput = document.querySelector("#chat-input") as HTMLInputElement;
   }
 
-  // --- Методы для управления модальным окном и чатом ---  
-
+  // --- Методы для управления модальным окном и чатом ---
 
   // Скрывает модальное окно и показывает чат
   public showChat(): void {
@@ -40,7 +49,7 @@ export default class ChatUI {
 
   // показывает ошибку в модальном окне
   public showNicknameError(message: string): void {
-    if(this.errorText) {
+    if (this.errorText) {
       this.errorText.textContent = message;
       this.errorText.classList.remove("visible");
     }
@@ -56,19 +65,17 @@ export default class ChatUI {
 
   // Теперь уберем у Имени лишник пробеллы и вернем
   public getNickname(): string {
-      return this.nicknameInput?.value.trim() || "";
+    return this.nicknameInput?.value.trim() || "";
   }
 
-
   // --- Методы для отрисовки контента ---
-
 
   public renderUserList(users: User[], currentUser: User): void {
     if (!this.usersList) return;
 
     this.usersList.innerHTML = "";
 
-    users.forEach(user => {
+    users.forEach((user) => {
       const li = document.createElement("li");
 
       const isCurrentUser = user.id === currentUser.id;
@@ -82,7 +89,6 @@ export default class ChatUI {
       }
 
       this.usersList?.append(li);
-    })
-  };
-
+    });
+  }
 }
