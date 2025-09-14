@@ -1,4 +1,4 @@
-# Работа с HTTP: HelpDesk
+# Домашнее задание к занятию "EventSource, Websockets" — Создание Чата
 
 ---
 
