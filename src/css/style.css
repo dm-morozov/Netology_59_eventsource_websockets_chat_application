@@ -5,6 +5,10 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f4f5f7;
     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 /* Стили для заголовков */
@@ -36,4 +40,175 @@ a:hover {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
+    width: 100%;
+}
+
+/* Стили для модального окна */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 0.4s ease;
+}
+
+.modal.hidden .modal-content {
+    transform: translateY(-50px);
+}
+
+.modal-header {
+    margin-top: 0;
+}
+
+.chat-user-title {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+#nickname {
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#modal-login-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #0079bf;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+#modal-login-btn:hover {
+    background: #0056b3;
+}
+
+.modal-error {
+    color: #e74c3c;
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
+}
+
+.modal-error.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Стили для контейнера чата */
+.chat-container {
+    display: flex;
+    width: 100%;
+    height: 80vh;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+}
+
+.chat-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-50px);
+}
+
+.chat-user-list {
+    width: 250px;
+    border-right: 1px solid #eee;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.users-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.users-list li {
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: background 0.3s ease;
+}
+
+.users-list li:hover {
+    background: #e9e9e9;
+}
+
+.chat-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.massages-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.chat-form {
+    display: flex;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.chat-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.chat-send-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #0079bf;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.chat-send-btn:hover {
+    background: #0056b3;
 }

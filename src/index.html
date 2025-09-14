@@ -6,12 +6,39 @@
     <title>Домашнее задание к занятию "EventSource, Websockets" — Создание Чата</title>
 </head>
 <body>
+    <!-- Модальное он для ввода имени -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Введите ваше имя</h2>
+            <input type="text" id="nickname" placeholder="Ваше имя..">
+            <button id="modal-login-btn">Войти</button>
+            <p id="modal-error" class="modal-error"></p>
+        </div>
+    </div>
     <div class="container">
         <h1>
             <a href="https://github.com/dm-morozov/Netology_59_eventsource_websockets_chat_application/tree/main/ahj-homeworks-AHJ-50/sse-ws">
                 Домашнее задание к занятию "EventSource, Websockets" — Создание Чата
             </a>
         </h1>
+
+        <div id="chat-container" class="chat-container hidden">
+
+            <!-- Список пользователей -->
+            <div class="chat-user-list">
+                <h2 class="chat-user-title">Участники чата</h2>
+                <ul id="users-list" class="users-list"></ul>
+            </div>
+
+            <!-- Чат -->
+             <div class="chat-main">
+                <div id="massages-box" class="massages-box"></div>
+                <form action="" id="chat-form" class="chat-form">
+                    <input type="text" name="message" id="chat-input" class="chat-input" placeholder="Введите сообщение...">
+                    <button type="submit" class="chat-send-btn">Отправить</button>
+                </form>
+             </div>
+        </div>
 
     </div>
 </body>
