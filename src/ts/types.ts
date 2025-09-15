@@ -13,6 +13,12 @@ export interface SendMessage {
   message: string;
 }
 
+// Сообщение для входа пользователя
+export interface JoinMessage {
+  type: "join";
+  user: User;
+}
+
 // Сообщение выхода пользователя
 export interface ExitMessage {
   type: "exit";
@@ -20,9 +26,10 @@ export interface ExitMessage {
 }
 
 // Union всех возможных сообщений по WS
-export type Message = SendMessage | ExitMessage;
+export type Message = SendMessage | ExitMessage | JoinMessage;
 
-// Сервер может передать либо Message, либо массив пользователей (userState)
+// Сервер может передать либо Message,
+// либо массив пользователей (userState)
 export type ServerPayload = Message | User[];
 
 // Тип ответа от POST /new-user

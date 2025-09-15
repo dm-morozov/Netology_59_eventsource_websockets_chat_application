@@ -10,7 +10,7 @@
     "test:e2e": "concurrently --kill-others --success first --raw \"yarn run dev\" \"wait-on http://localhost:3000 && jest --config jest.e2e.config.js\"",
     "test:e2e:headless": "concurrently --kill-others --success first \"yarn run dev\" \"wait-on http://localhost:3000 && jest --config jest.e2e.config.js --detectOpenHandles --forceExit\"",
     "test": "jest --coverage --passWithNoTests",
-    "dev": "webpack serve --env development --port 3000",
+    "dev": "webpack serve --env development --port 3030",
     "build": "webpack --env production",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",

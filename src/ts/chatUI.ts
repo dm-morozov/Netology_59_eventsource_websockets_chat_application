@@ -1,3 +1,5 @@
+// src/ts/chatUI.ts
+
 import { User, Message } from "./types";
 
 export default class ChatUI {
@@ -140,6 +142,15 @@ export default class ChatUI {
         </div>
         <div class="message-text">💡 Пользователь ${message.user.name} вышел из чата</div>
       `;
+    } else if (message.type === "join") {
+      messageElement.classList.add("system-message");
+      const time = new Date().toLocaleTimeString();
+      messageElement.innerHTML = `
+        <div class="message-info">
+          <span class="message-time">${time}</span>
+        </div>
+        <div class="message-text">💡 Пользователь ${message.user.name} вошел в чат</div>
+      `;
     }
 
     // Дай бог все собрали, добавляем в контейнер
@@ -147,5 +158,28 @@ export default class ChatUI {
     // добавим автоматический скрол,
     // чтобы сообщение последнее было внизу
     this.messagesBox.scrollTop = this.messagesBox.scrollHeight;
+  }
+
+  // --- Методы для подписки на события ---
+
+  // Добавление обработчика событий для кнопки входа
+  public onLogin(callback: () => void): void {
+    if (this.modalLoginBtn) {
+      this.modalLoginBtn.addEventListener("click", callback);
+    }
+  }
+
+  // Добавляем обработчик событий для формы отправки сообщений
+  public onSendMessage(callback: (message: string) => void): void {
+    this.chatForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const message = this.chatInput?.value;
+      if (message) {
+        callback(message);
+        if (this.chatInput) {
+          this.chatInput.value = "";
+        }
+      }
+    });
   }
 }

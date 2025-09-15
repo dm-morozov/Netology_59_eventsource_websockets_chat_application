@@ -43,23 +43,16 @@ Webpack
 
 
 src/
-
   ts/
-
     api.ts
-
     chatUI.ts
-
     chatWS.ts
-
     chatApp.ts
-
-types.ts
-
+    types.ts
+    tests.ts
   index.ts
-
+  index.html
   css/
-
     style.css
 -----
 
