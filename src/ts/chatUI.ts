@@ -1,4 +1,4 @@
-import { User, SendMessage, Message } from "./types";
+import { User, Message } from "./types";
 
 export default class ChatUI {
   private modal: HTMLDivElement | null;
@@ -102,11 +102,10 @@ export default class ChatUI {
     // Проверяем тип. Если это обычное сообщение, то send, иначе exit
 
     if (message.type === "send") {
-      
       // Нужно определить с какой стороны выводить сообщение
       // Для этого определим наше это сообщение или не наше.
       const isCurrentUser = message.user.id === currentUser.id;
-      
+
       if (isCurrentUser) {
         messageElement.classList.add("my-message");
       } else {
@@ -132,9 +131,7 @@ export default class ChatUI {
         </div>
         <div class="message-text">${messageText}</div>
       `;
-
     } else if (message.type === "exit") {
-      
       messageElement.classList.add("system-message");
       const time = new Date().toLocaleTimeString();
       messageElement.innerHTML = `
@@ -143,13 +140,12 @@ export default class ChatUI {
         </div>
         <div class="message-text">💡 Пользователь ${message.user.name} вышел из чата</div>
       `;
-
     }
 
     // Дай бог все собрали, добавляем в контейнер
     this.messagesBox?.append(messageElement);
-    // добавим автоматический скрол, 
+    // добавим автоматический скрол,
     // чтобы сообщение последнее было внизу
-    this.messagesBox.scrollTop = this.messagesBox.scrollHeight
+    this.messagesBox.scrollTop = this.messagesBox.scrollHeight;
   }
 }

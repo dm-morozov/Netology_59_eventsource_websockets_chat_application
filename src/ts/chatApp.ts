@@ -1,6 +1,6 @@
 // chatApp.ts
 
-import ChatUI from "./chatUI";
+// import ChatUI from "./chatUI";
 import "./tests";
 
 // const chatUI = new ChatUI();
@@ -10,5 +10,3 @@ import "./tests";
 // Сделаем что-бы команда chatUI.showChat()
 // была доступна в глобальном контексте
 // (window as any).chatUI = chatUI;
-
-
