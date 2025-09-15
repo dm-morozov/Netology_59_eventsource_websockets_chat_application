@@ -95,5 +95,6 @@ export default class ChatApp {
 }
 
 // Запускаем приложение
-const app = new ChatApp("http://localhost:3000", "ws://localhost:3000");
+const serverUrl = 'https://netology-59-eventsource-websockets-chat-ee9w.onrender.com';
+const app = new ChatApp(serverUrl, `wss://${new URL(serverUrl).hostname}`);
 app.init();
