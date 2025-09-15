@@ -1,11 +1,14 @@
 // chatApp.ts
 
 import ChatUI from "./chatUI";
+import "./tests";
 
-const chatUI = new ChatUI();
+// const chatUI = new ChatUI();
 
-chatUI.showChat();
+// chatUI.showChat();
 
 // Сделаем что-бы команда chatUI.showChat()
 // была доступна в глобальном контексте
 // (window as any).chatUI = chatUI;
+
+

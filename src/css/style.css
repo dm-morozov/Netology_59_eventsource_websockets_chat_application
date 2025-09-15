@@ -213,3 +213,62 @@ a:hover {
 .chat-send-btn:hover {
     background: #0056b3;
 }
+
+/* Общие стили сообщений */
+.message {
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Сообщения текущего пользователя */
+.my-message {
+    background: #e6f3ff;   /* светлый голубой фон */
+    color: #003366;        /* тёмно-синий текст */
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+/* Сообщения других пользователей */
+.other-message {
+    background: #f9f9f9;   /* светло-серый */
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+}
+
+/* Системные сообщения */
+.system-message {
+    text-align: center;
+    background: #f1f1f1;
+    color: #666;
+    font-style: italic;
+    font-size: 13px;
+    margin: 15px auto;
+    padding: 6px 12px;
+    border-radius: 20px;
+    max-width: 80%;
+}
+
+/* Информация о сообщении */
+.message-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.message-username {
+    font-weight: 600;
+}
+
+.message-time {
+    font-size: 11px;
+    opacity: 0.7;
+}

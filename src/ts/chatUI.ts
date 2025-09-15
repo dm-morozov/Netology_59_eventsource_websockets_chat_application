@@ -1,4 +1,4 @@
-import { User } from "./types";
+import { User, SendMessage, Message } from "./types";
 
 export default class ChatUI {
   private modal: HTMLDivElement | null;
@@ -77,11 +77,12 @@ export default class ChatUI {
 
     users.forEach((user) => {
       const li = document.createElement("li");
-
+      // Проверяем, является ли пользователь текущим
       const isCurrentUser = user.id === currentUser.id;
 
+      // и если является, добавляем класс current-user
       if (isCurrentUser) {
-        li.textContent = "Вы";
+        li.textContent = "You";
         li.classList.add("current-user");
       } else {
         li.textContent = user.name;
@@ -90,5 +91,65 @@ export default class ChatUI {
 
       this.usersList?.append(li);
     });
+  }
+
+  public renderMessage(message: Message, currentUser: User): void {
+    if (!this.messagesBox) return;
+
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+
+    // Проверяем тип. Если это обычное сообщение, то send, иначе exit
+
+    if (message.type === "send") {
+      
+      // Нужно определить с какой стороны выводить сообщение
+      // Для этого определим наше это сообщение или не наше.
+      const isCurrentUser = message.user.id === currentUser.id;
+      
+      if (isCurrentUser) {
+        messageElement.classList.add("my-message");
+      } else {
+        messageElement.classList.add("other-message");
+      }
+
+      // Собирем текст сообщения
+      const userName = isCurrentUser ? "You" : message.user.name;
+      const time = new Date().toLocaleDateString();
+
+      // Так как по заданию стоит:
+      // export interface SendMessage {
+      //   type: "send";
+      //   user: User;
+      //   message: string;
+      // }
+      const messageText = message.message;
+
+      messageElement.innerHTML = `
+        <div class="message-info">
+          <span class="message-username">${userName}</span>
+          <span class="message-time">${time}</span>
+        </div>
+        <div class="message-text">${messageText}</div>
+      `;
+
+    } else if (message.type === "exit") {
+      
+      messageElement.classList.add("system-message");
+      const time = new Date().toLocaleTimeString();
+      messageElement.innerHTML = `
+        <div class="message-info">
+          <span class="message-time">${time}</span>
+        </div>
+        <div class="message-text">💡 Пользователь ${message.user.name} вышел из чата</div>
+      `;
+
+    }
+
+    // Дай бог все собрали, добавляем в контейнер
+    this.messagesBox?.append(messageElement);
+    // добавим автоматический скрол, 
+    // чтобы сообщение последнее было внизу
+    this.messagesBox.scrollTop = this.messagesBox.scrollHeight
   }
 }
