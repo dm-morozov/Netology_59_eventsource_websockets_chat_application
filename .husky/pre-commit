@@ -3,10 +3,10 @@ echo "Running pre-commit hook"
 echo "Current directory: $(pwd)"
 
 # Проверка кода линтером
-yarn lint
+npm run lint
 
 # Unit-тесты
-# yarn test
+npm run test
 
 # E2E-тесты
 # yarn test:e2e:headless
