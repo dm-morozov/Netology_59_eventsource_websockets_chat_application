@@ -34,6 +34,12 @@ export default class ChatWS {
     this.events = events; // сохраняет их в свойства класса
   }
 
+  public onOpen(callback: () => void): void {
+    if (this.socket) {
+      this.socket.onopen = callback;
+    }
+  }
+
   // подключается к серверу WebSocket
   public connect(user: User): void {
     // Проверка на то, что сокет уже подключен,
@@ -108,11 +114,11 @@ export default class ChatWS {
   // закрываем соединение
   public close(): void {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-      const ExitMessage: ExitMessage = {
+      const exitMessage: ExitMessage = {
         type: "exit",
         user: this.currentUser!,
       };
-      this.sendMessage(ExitMessage);
+      this.sendMessage(exitMessage);
 
       setTimeout(() => {
         this.socket?.close();

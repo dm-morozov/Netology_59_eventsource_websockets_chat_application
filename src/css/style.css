@@ -1,4 +1,9 @@
-/* Общие стили для страницы */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -11,9 +16,9 @@ body {
     min-height: 100vh;
 }
 
-/* Стили для заголовков */
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
+    font-size: larger;
     color: #444;
     margin: 20px 0;
     text-align: center;
@@ -24,7 +29,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Стили для ссылок */
 a {
     color: #0079bf;
     text-decoration: none;
@@ -35,22 +39,22 @@ a:hover {
     color: #0056b3;
 }
 
-/* Стили для контейнера */
 .container {
+    width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
-    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-/* Стили для модального окна */
+/* ===================== МОДАЛЬНОЕ ОКНО ===================== */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0,0,0,0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,10 +70,11 @@ a:hover {
 }
 
 .modal-content {
+    width: 350px;
     background: #fff;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     text-align: center;
     transform: translateY(0);
     transition: transform 0.4s ease;
@@ -83,11 +88,6 @@ a:hover {
     margin-top: 0;
 }
 
-.chat-user-title {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
-}
-
 #nickname {
     padding: 10px;
     width: 80%;
@@ -99,6 +99,7 @@ a:hover {
 
 #modal-login-btn {
     padding: 10px 20px;
+    width: 80%;
     border: none;
     background: #0079bf;
     color: #fff;
@@ -114,30 +115,31 @@ a:hover {
 
 .modal-error {
     color: #e74c3c;
-    margin-top: 10px;
+    margin: 10px auto;
     font-size: 14px;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.4s ease;
+    display: none;
 }
 
 .modal-error.visible {
     opacity: 1;
     visibility: visible;
+    display: block;
+    margin-bottom: 0px;
 }
 
-/* Стили для контейнера чата */
+/* ===================== КОНТЕЙНЕР ЧАТА ===================== */
 .chat-container {
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: 80vh;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
 .chat-container.hidden {
@@ -146,24 +148,29 @@ a:hover {
     transform: translateY(-50px);
 }
 
+/* ===================== СПИСОК ПОЛЬЗОВАТЕЛЕЙ (Mobile First) ===================== */
 .chat-user-list {
-    width: 250px;
-    border-right: 1px solid #eee;
-    padding: 20px;
-    overflow-y: auto;
+    flex: 0 0 130px;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+    overflow-x: auto;
 }
 
 .users-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    column-gap: 10px;
+    overflow-x: auto;
 }
 
 .users-list li {
-    padding: 10px;
+    padding: 8px 15px;
+    margin-bottom: 10px;
     background: #f8f8f8;
     border-radius: 4px;
-    margin-bottom: 5px;
+    white-space: nowrap;
     transition: background 0.3s ease;
 }
 
@@ -171,24 +178,24 @@ a:hover {
     background: #e9e9e9;
 }
 
+/* ===================== ЧАТ (Mobile First) ===================== */
 .chat-main {
-    flex-grow: 1;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
-    padding: 20px;
+    flex-grow: 1;
+    height: calc(100% - 130px);
 }
 
-.massages-box {
+.messages-box {
     flex-grow: 1;
     overflow-y: auto;
-    margin-bottom: 20px;
+    padding: 10px 20px;
 }
 
 .chat-form {
     display: flex;
     border-top: 1px solid #eee;
-    padding-top: 15px;
+    padding: 10px 20px;
 }
 
 .chat-input {
@@ -214,54 +221,54 @@ a:hover {
     background: #0056b3;
 }
 
-/* Общие стили сообщений */
+/* ===================== СООБЩЕНИЯ ===================== */
 .message {
     padding: 10px 14px;
     margin-bottom: 12px;
     border-radius: 10px;
-    max-width: 70%;
     word-wrap: break-word;
     font-size: 14px;
     line-height: 1.5;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    max-width: 85%;
 }
 
-/* Сообщения текущего пользователя */
 .my-message {
-    background: #e6f3ff;   /* светлый голубой фон */
-    color: #003366;        /* тёмно-синий текст */
+    background: #e6f3ff;
+    color: #003366;
     margin-left: auto;
     border-bottom-right-radius: 4px;
 }
 
-/* Сообщения других пользователей */
 .other-message {
-    background: #f9f9f9;   /* светло-серый */
+    background: #f9f9f9;
     color: #333;
     margin-right: auto;
     border-bottom-left-radius: 4px;
 }
 
-/* Системные сообщения */
 .system-message {
     text-align: center;
-    background: #f1f1f1;
-    color: #666;
+    background: transparent;
+    color: #999;
     font-style: italic;
     font-size: 13px;
     margin: 15px auto;
-    padding: 6px 12px;
-    border-radius: 20px;
+    padding: 0;
+    border-radius: 0;
     max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
 }
 
-/* Информация о сообщении */
 .message-info {
     display: flex;
     justify-content: space-between;
     margin-bottom: 6px;
     font-size: 12px;
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0,0,0,0.5);
 }
 
 .message-username {
@@ -273,33 +280,110 @@ a:hover {
     opacity: 0.7;
 }
 
-/* Системные сообщения (выход/уведомления) */
-.system-message {
-    background: #f1f1f1;
-    color: #666;
-    font-style: italic;
-    font-size: 13px;
-    margin: 20px auto;
-    padding: 10px 16px;
-    border-radius: 20px;
-    max-width: 80%;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .system-message .message-info {
-    display: flex;
     justify-content: center;
     font-size: 11px;
-    color: rgba(0, 0, 0, 0.5);
+    color: #999;
     margin-bottom: 4px;
-    width: 100%;
 }
 
 .system-message .message-text {
-    width: 100%;
     text-align: center;
+}
+
+
+/* Базовые стили для прелоадера */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  display: none;
+}
+
+/* Стили для вращающегося элемента */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #2980b9;
+  border-radius: 50%;
+  animation: spin 3s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+
+/* Стили для сообщений */
+.preloader-message {
+  text-align: center;
+  margin-top: 25px;
+  color: #333;
+}
+
+.preloader-heading {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 0;
+}
+
+.preloader-subtext {
+  font-size: 0.9em;
+  color: #888;
+  margin-top: 5px;
+  font-weight: 400;
+}
+
+/* Анимация вращения */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===================== DESKTOP (Min-width 768px) ===================== */
+@media (min-width: 768px) {
+
+    .container {
+        padding: 20px;
+    }
+
+    .chat-container {
+        flex-direction: row;
+    }
+
+    .chat-user-list {
+        flex: 0 0 30%;
+        border-bottom: none;
+        border-right: 1px solid #eee;
+        height: auto;
+    }
+
+    .users-list {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .chat-main {
+        flex: 0 0 70%;
+        height: 100%;
+    }
+
+    .message {
+        max-width: 70%;
+    }
 }

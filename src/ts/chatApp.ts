@@ -10,6 +10,7 @@ export default class ChatApp {
   private chatUI: ChatUI;
   private chatWS: ChatWS;
   private currentUser: User | null = null;
+  private pingInterval: number | null = null;
 
   constructor(apiUrl: string, wsUrl: string) {
     this.api = new Api(apiUrl);
@@ -35,6 +36,25 @@ export default class ChatApp {
 
     // Подписываемся на событие закрытия страницы
     this.chatUI.onPageUnload(this.handleUnload.bind(this));
+
+    // Добавляем обработчик для события успешного открытия WS-соединения
+    // Как только соединение открыто, скрываем прелоадер
+    this.chatWS.onOpen(() => this.chatUI.hidePreloader());
+
+    // Запускаем пингование при инициализации приложения
+    this.startPinging();
+  }
+
+  // Метод для запуска пингования
+  private startPinging(): void {
+    // Пингуем каждые 2 минуты, чтобы сервер не заснул
+    const pingTime = 2 * 60 * 1000;
+
+    this.pingInterval = setInterval(() => {
+      this.api.pingServer();
+    }, pingTime) as unknown as number;
+
+    console.log("Pinging to server started.");
   }
 
   // Обработчики событий от ChatUI
@@ -46,12 +66,15 @@ export default class ChatApp {
       return;
     }
 
+    // когда пользователь пытается войти
+    this.chatUI.showPreloader();
     // Отправляем запрос на регистрацию через Api
     const response = await this.api.registerUser(nickname);
 
     if (response.status === "ok") {
       this.currentUser = response.user;
       this.chatUI.showChat();
+      this.chatUI.hidePreloader();
       this.chatWS.connect(this.currentUser);
     } else {
       this.chatUI.showNicknameError(response.message);

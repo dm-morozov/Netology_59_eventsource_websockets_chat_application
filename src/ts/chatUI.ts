@@ -7,6 +7,7 @@ export default class ChatUI {
   private nicknameInput: HTMLInputElement | null;
   private modalLoginBtn: HTMLButtonElement | null;
   private errorText: HTMLParagraphElement | null;
+  private preloader: HTMLDivElement | null;
 
   private chatContainer: HTMLDivElement | null;
   private usersList: HTMLUListElement | null;
@@ -26,6 +27,8 @@ export default class ChatUI {
       "#modal-error",
     ) as HTMLParagraphElement;
 
+    this.preloader = document.querySelector(".preloader") as HTMLDivElement;
+
     this.chatContainer = document.querySelector(
       "#chat-container",
     ) as HTMLDivElement;
@@ -35,6 +38,22 @@ export default class ChatUI {
     ) as HTMLDivElement;
     this.chatForm = document.querySelector("#chat-form") as HTMLFormElement;
     this.chatInput = document.querySelector("#chat-input") as HTMLInputElement;
+  }
+
+  // --- Методы для управления прелоадером ---
+
+  // Показывает прелоадер (изначально он виден, но этот метод может понадобиться для других сценариев)
+  public showPreloader(): void {
+    if (this.preloader) {
+      this.preloader.classList.remove("hidden");
+    }
+  }
+
+  // Скрывает прелоадер
+  public hidePreloader(): void {
+    if (this.preloader) {
+      this.preloader.classList.add("hidden");
+    }
   }
 
   // --- Методы для управления модальным окном и чатом ---
@@ -53,7 +72,7 @@ export default class ChatUI {
   public showNicknameError(message: string): void {
     if (this.errorText) {
       this.errorText.textContent = message;
-      this.errorText.classList.remove("visible");
+      this.errorText.classList.add("visible");
     }
   }
 
@@ -61,7 +80,7 @@ export default class ChatUI {
   public clearNicknameError(): void {
     if (this.errorText) {
       this.errorText.textContent = "";
-      this.errorText.classList.add("visible");
+      this.errorText.classList.remove("visible");
     }
   }
 
@@ -84,7 +103,7 @@ export default class ChatUI {
 
       // и если является, добавляем класс current-user
       if (isCurrentUser) {
-        li.textContent = "You";
+        li.innerHTML = `<strong>You ( ${user.name} )</strong>`;
         li.classList.add("current-user");
       } else {
         li.textContent = user.name;
@@ -166,6 +185,15 @@ export default class ChatUI {
   public onLogin(callback: () => void): void {
     if (this.modalLoginBtn) {
       this.modalLoginBtn.addEventListener("click", callback);
+    }
+
+    if (this.nicknameInput) {
+      this.nicknameInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          callback();
+        }
+      });
     }
   }
 

@@ -16,6 +16,7 @@ export default class Api {
     this.apiUrl = apiUrl;
   }
 
+  // Метод для регистрации нового пользователя
   public async registerUser(name: string): Promise<NewUserResponse> {
     try {
       const response = await fetch(`${this.apiUrl}/new-user`, {
@@ -52,6 +53,16 @@ export default class Api {
         status: "error",
         message: "Не удалось соединиться с сервером. Попробуйте позже.",
       } as NewUserResponseError;
+    }
+  }
+
+  // Метод для пингования
+  public async pingServer(): Promise<void> {
+    try {
+      await fetch(this.apiUrl + "/ping");
+      console.log("Server pinged successfully.");
+    } catch (error) {
+      console.error("Failed to ping the server:", error);
     }
   }
 }

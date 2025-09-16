@@ -85,11 +85,21 @@ app.post("/new-user", (request: Request, response: Response) => {
   }
 });
 
+// Новый маршрут для пингования
+app.get('/ping', (request: Request, response: Response) => {
+  // Отправляем пустой ответ с кодом 200 OK
+  response.status(200).end();
+  logger.info('Received a ping request');
+});
+
 // --------------------
 // WebSocket сервер
 // --------------------
 const server = http.createServer(app);
 const wsServer = new WebSocketServer({ server });
+
+// Создаем Map для хранения связи между WS-соединением и пользователем
+const usersMap = new Map<WebSocket, User>();
 
 wsServer.on("connection", (ws: WebSocket) => {
   ws.on("message", (msg: WebSocket.RawData, isBinary: boolean) => {
@@ -133,6 +143,11 @@ wsServer.on("connection", (ws: WebSocket) => {
     
     // обработка входа пользователя
     if (receivedMSG.type === "join") {
+
+      // Теперь мы сохраняем пользователя
+      // в usersMap только после того, как получили его данные
+      usersMap.set(ws, receivedMSG.user);
+
       // Пересылаем сообщение о входе всем клиентам
       [...wsServer.clients]
         .filter((o) => o.readyState === WebSocket.OPEN)
@@ -148,7 +163,37 @@ wsServer.on("connection", (ws: WebSocket) => {
       );
       return;
     }
+    
   });
+  
+  // Шаг 2: Реализация закрытия соединения на сервере
+  ws.on('close', () => {
+    const user = usersMap.get(ws);
+    if (user) {
+      const idx = userState.findIndex(u => u.id === user.id);
+      if (idx !== -1) {
+        userState.splice(idx, 1);
+      }
+      usersMap.delete(ws);
+
+      // Отправляем всем сообщение о выходе
+      const exitMessage = {
+        type: "exit",
+        user: user,
+      };
+      [...wsServer.clients]
+        .filter((o) => o.readyState === WebSocket.OPEN)
+        .forEach((o) => o.send(JSON.stringify(exitMessage)));
+      
+      // И обновленный список пользователей
+      [...wsServer.clients]
+        .filter((o) => o.readyState === WebSocket.OPEN)
+        .forEach((o) => o.send(JSON.stringify(userState)));
+
+      logger.info(`User with name "${user.name}" has been disconnected`);
+    }
+  });
+
 
   // при новом подключении отправляем текущее состояние
   [...wsServer.clients]
