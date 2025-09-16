@@ -81,6 +81,7 @@ export default class ChatApp {
       this.chatWS.connect(this.currentUser);
     } else {
       this.chatUI.showNicknameError(response.message);
+      this.chatUI.hidePreloader();
     }
   }
 
