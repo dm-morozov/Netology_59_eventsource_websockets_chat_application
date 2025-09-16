@@ -96,16 +96,31 @@ wsServer.on("connection", (ws: WebSocket) => {
     const receivedMSG: Message = JSON.parse(msg.toString());
     logger.info(`Message received: ${JSON.stringify(receivedMSG)}`);
 
+    // обработка отправки сообщения
+    if (receivedMSG.type === "send") {
+      [...wsServer.clients]
+        .filter((o) => o.readyState === WebSocket.OPEN)
+        .forEach((o) => o.send(msg, { binary: isBinary }));
+
+      logger.info("Message sent to all users");
+      return;
+    }
+    
     // обработка выхода пользователя
     if (receivedMSG.type === "exit") {
       const idx = userState.findIndex(
         (user) => user.name === receivedMSG.user.name
       );
-
       if (idx !== -1) {
         userState.splice(idx, 1);
       }
-
+      
+      // Пересылаем сообщение о выходе всем клиентам
+      [...wsServer.clients]
+        .filter((o) => o.readyState === WebSocket.OPEN)
+        .forEach((o) => o.send(msg, { binary: isBinary }));
+        
+      // Затем отправляем обновлённый список пользователей
       [...wsServer.clients]
         .filter((o) => o.readyState === WebSocket.OPEN)
         .forEach((o) => o.send(JSON.stringify(userState)));
@@ -115,14 +130,23 @@ wsServer.on("connection", (ws: WebSocket) => {
       );
       return;
     }
-
-    // обработка отправки сообщения
-    if (receivedMSG.type === "send") {
+    
+    // обработка входа пользователя
+    if (receivedMSG.type === "join") {
+      // Пересылаем сообщение о входе всем клиентам
       [...wsServer.clients]
         .filter((o) => o.readyState === WebSocket.OPEN)
         .forEach((o) => o.send(msg, { binary: isBinary }));
+      
+      // Затем отправляем обновлённый список пользователей
+      [...wsServer.clients]
+        .filter((o) => o.readyState === WebSocket.OPEN)
+        .forEach((o) => o.send(JSON.stringify(userState)));
 
-      logger.info("Message sent to all users");
+      logger.info(
+        `User with name "${receivedMSG.user.name}" has joined`
+      );
+      return;
     }
   });
 

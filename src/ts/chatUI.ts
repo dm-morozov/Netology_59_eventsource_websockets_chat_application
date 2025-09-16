@@ -182,4 +182,9 @@ export default class ChatUI {
       }
     });
   }
+
+  // Добавление обработчика для события закрытия страницы
+  public onPageUnload(callback: () => void): void {
+    window.addEventListener("beforeunload", callback);
+  }
 }

@@ -32,6 +32,9 @@ export default class ChatApp {
 
     // Подписываемся на событие отправки сообщений
     this.chatUI.onSendMessage(this.handleSendMessage.bind(this));
+
+    // Подписываемся на событие закрытия страницы
+    this.chatUI.onPageUnload(this.handleUnload.bind(this));
   }
 
   // Обработчики событий от ChatUI
@@ -91,6 +94,12 @@ export default class ChatApp {
 
   private handleWSError(event: Event): void {
     console.error("Ошибка WebSocket:", event);
+  }
+
+  private handleUnload(): void {
+    if (this.chatWS) {
+      this.chatWS.close();
+    }
   }
 }
 
