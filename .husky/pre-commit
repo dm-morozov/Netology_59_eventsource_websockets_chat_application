@@ -1,12 +1,17 @@
 #!/usr/bin/env sh
-echo "Running pre-commit hook"
-echo "Current directory: $(pwd)"
+. "$(dirname -- "$0")/_/husky.sh"
 
-# Проверка кода линтером
+
+echo "Running pre-commit hook" 
+echo "Current directory: $(pwd)" 
+
+# Проверка кода линтером 
+npm run lint:fix
 npm run lint
 
-# Unit-тесты
-npm run test
+# Unit-тесты 
+npm run test 
 
-# E2E-тесты
+# E2E-тесты 
 # yarn test:e2e:headless
+
