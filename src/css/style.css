@@ -84,6 +84,10 @@ a:hover {
     transform: translateY(-50px);
 }
 
+.chat-user-title {
+    display: none;
+}
+
 .modal-header {
     margin-top: 0;
 }
@@ -150,7 +154,7 @@ a:hover {
 
 /* ===================== СПИСОК ПОЛЬЗОВАТЕЛЕЙ (Mobile First) ===================== */
 .chat-user-list {
-    flex: 0 0 130px;
+    flex: 0 0 60px;
     border-bottom: 1px solid #eee;
     padding: 10px;
     overflow-x: auto;
@@ -359,7 +363,11 @@ a:hover {
 @media (min-width: 768px) {
 
     .container {
-        padding: 20px;
+        padding: 15px;
+    }
+
+    .chat-user-title {
+        display: block;
     }
 
     .chat-container {

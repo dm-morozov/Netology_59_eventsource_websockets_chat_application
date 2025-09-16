@@ -6,7 +6,7 @@ echo "Running pre-commit hook"
 echo "Current directory: $(pwd)" 
 
 # Проверка кода линтером 
-npm run lint:fix
+# npm run lint:fix
 npm run lint
 
 # Unit-тесты 

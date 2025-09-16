@@ -64,6 +64,9 @@ export default class ChatApp {
     if (!nickname) {
       this.chatUI.showNicknameError("Имя не может быть пустым.");
       return;
+    } else if (nickname.length > 20) {
+      this.chatUI.showNicknameError("Имя не должно превышать 20 символов.");
+      return;
     }
 
     // когда пользователь пытается войти
